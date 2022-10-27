@@ -1,0 +1,16 @@
+#!/usr/bin/perl
+use strict;
+use warnings;
+use FindBin qw($RealBin);
+use File::Find;
+use feature 'say';
+
+find ({wanted =>\&wanted, follow => 1 }, ($RealBin . '/..', @INC));
+
+sub wanted {
+    if ($File::Find::name =~ m/App\/ipchgmon.pm$/) {
+        my $cmd = join " ", 'perl', $File::Find::name, @ARGV;
+        say qx($cmd 2>&1); 
+        exit;
+    }
+}
