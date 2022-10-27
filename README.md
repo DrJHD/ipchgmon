@@ -147,6 +147,6 @@ This library is free software; you can redistribute it and/or modify it under th
 
 # CREDITS
 
-https://www.perlmonks.org/?node\id=155288 for the getopt/usage model.
+https://www.perlmonks.org/?node_id=155288 for the getopt/usage model.
 
 Fergus McMenemie for the talk on modulinos (https://www.youtube.com/watch?v=wCW4tpMgdHs).
