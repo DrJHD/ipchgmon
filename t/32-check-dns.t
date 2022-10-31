@@ -34,11 +34,11 @@ my $mockEmailStuffer = Test::MockModule->new('Email::Stuffer')
 
 # set options that would have been passed from the command line in production
 my @recipients = ('dnsto@example.com');
-$ipchgmon::opt_email = \@recipients;
-$ipchgmon::opt_mailfrom = 'dnsfrom@example.com';
-$ipchgmon::opt_mailsubject = 'DNS test';
-$ipchgmon::opt_4 = 1;
-$ipchgmon::opt_6 = 1;
+$App::ipchgmon::opt_email = \@recipients;
+$App::ipchgmon::opt_mailfrom = 'dnsfrom@example.com';
+$App::ipchgmon::opt_mailsubject = 'DNS test';
+$App::ipchgmon::opt_4 = 1;
+$App::ipchgmon::opt_6 = 1;
 
 # Build the aoaref
 my $csv = Text::CSV->new();
@@ -69,12 +69,12 @@ push @$aoaref, [@fields];
 
 # Run the tests in a simple case
 my $dnsname = 'example.com';
-ipchgmon::check_dns($dnsname, $aoaref);
+App::ipchgmon::check_dns($dnsname, $aoaref);
 test_email_sent();
 
 ## No leeway, so an immediate recheck should re-send.
 undef $aoaref;
-my ($ip4, $ip6) = ipchgmon::nslookup('example.com');
+my ($ip4, $ip6) = App::ipchgmon::nslookup('example.com');
 my $dt = DateTime->now;
 my $timestamp = $dt->rfc3339;
 $csv->combine($timestamp);
@@ -85,13 +85,13 @@ for my $ip ($ip4, $ip6) {
 }
 sleep 2; # Make sure timestamp changes
 $rtn = '';
-ipchgmon::check_dns($dnsname, $aoaref);
+App::ipchgmon::check_dns($dnsname, $aoaref);
 test_email_sent();
 
 ## Check there are no emails if within leeway
 $rtn = '';
-$ipchgmon::opt_leeway = 86400;
-ipchgmon::check_dns($dnsname, $aoaref);
+$App::ipchgmon::opt_leeway = 86400;
+App::ipchgmon::check_dns($dnsname, $aoaref);
 is $rtn, '', 'No emails populated if within leeway';
 
 done_testing();

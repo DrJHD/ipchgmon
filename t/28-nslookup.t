@@ -12,7 +12,7 @@ use App::ipchgmon;
 # Huge assumption that these addresses will not change.
 # Better ideas gratefully accepted!
 
-my ($ip4, $ip6) = ipchgmon::nslookup('example.com');
+my ($ip4, $ip6) = App::ipchgmon::nslookup('example.com');
 is $ip6, '2606:2800:220:1:248:1893:25c8:1946', 
     "Correct IPv6 address for example.com ($ip6)";
 is $ip4, '93.184.216.34',

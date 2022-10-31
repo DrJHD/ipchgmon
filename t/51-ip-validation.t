@@ -27,13 +27,13 @@ my $test4 = csv (in => \$csv4, headers => 'auto', allow_whitespace => 1);
 
 subtest 'IPv4 validation works' => sub {
     for my $hr_test (@$test4) {
-        ok (!ipchgmon::valid4($$hr_test{ip}),
+        ok (!App::ipchgmon::valid4($$hr_test{ip}),
             $$hr_test{ip} . ' ' . $$hr_test{message})
             or diag  $$hr_test{ip} . ' ' . $$hr_test{diag};
     }
 
     my $ip = '121.122.123.124';
-    ok (ipchgmon::valid4($ip), "$ip valid IPv4")
+    ok (App::ipchgmon::valid4($ip), "$ip valid IPv4")
         or diag("$ip has been rejected but is valid");
 };
 
@@ -53,13 +53,13 @@ my $test6 = csv (in => \$csv6, headers => 'auto', allow_whitespace => 1);
 
 subtest 'IPv6 validation works' => sub {
     for my $hr_test (@$test6) {
-        ok (!ipchgmon::valid6($$hr_test{ip}), 
+        ok (!App::ipchgmon::valid6($$hr_test{ip}), 
             $$hr_test{ip} . ' ' . $$hr_test{message})
             or diag  $$hr_test{ip} . ' ' . $$hr_test{diag};
     }
 
     my $ip = 'A::1';
-    ok (ipchgmon::valid6($ip), "$ip valid IPv6")
+    ok (App::ipchgmon::valid6($ip), "$ip valid IPv6")
         or diag("$ip has been rejected but is valid");
 };
 

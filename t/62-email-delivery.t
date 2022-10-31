@@ -26,11 +26,11 @@ my $mockEmailStuffer = Test::MockModule->new('Email::Stuffer')
 });
 
 my @recipients = ('you@example.com');
-$ipchgmon::opt_email = \@recipients;
-$ipchgmon::opt_mailfrom = 'me@example.com';
-$ipchgmon::opt_mailsubject = 'test';
-$ipchgmon::opt_server = 'Test server';
-ipchgmon::send_email('0.0.0.0');
+$App::ipchgmon::opt_email = \@recipients;
+$App::ipchgmon::opt_mailfrom = 'me@example.com';
+$App::ipchgmon::opt_mailsubject = 'test';
+$App::ipchgmon::opt_server = 'Test server';
+App::ipchgmon::send_email('0.0.0.0');
 like $rtn, qr(To: you), '"To" rendered correctly';
 like $rtn, qr(From: me), '"From" rendered correctly';
 like $rtn, qr(Subject: test), '"Subject" rendered correctly';

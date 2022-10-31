@@ -24,17 +24,17 @@ $mockEmailTransport->mock('new', sub{
 $mockEmailTransport->mock('host', sub{shift; $host = shift;});
 $mockEmailTransport->mock('port', sub{shift; $port = shift;});
 
-$ipchgmon::opt_mailserver = 'Outbound mail';
-$ipchgmon::opt_mailport = 25;
-ipchgmon::build_transport;
+$App::ipchgmon::opt_mailserver = 'Outbound mail';
+$App::ipchgmon::opt_mailport = 25;
+App::ipchgmon::build_transport;
 is $host, 'Outbound mail', 'Host populated correctly';
 is $port, 25,              'Port populated correctly';
 
 undef $host;
 undef $port;
-undef $ipchgmon::opt_mailport;
-$ipchgmon::opt_mailserver = 'Outbound mail 2';
-ipchgmon::build_transport;
+undef $App::ipchgmon::opt_mailport;
+$App::ipchgmon::opt_mailserver = 'Outbound mail 2';
+App::ipchgmon::build_transport;
 is $host, 'Outbound mail 2', 'Host populated correctly when port omitted';
 is $port, 25,                'Port populated correctly when omitted';
 

@@ -31,9 +31,9 @@ my $mockEmailStuffer = Test::MockModule->new('Email::Stuffer')
 
 # set options that would have been passed from the command line in production
 my @recipients = ('dnsto@example.com');
-$ipchgmon::opt_email = \@recipients;
-$ipchgmon::opt_mailfrom = 'dnsfrom@example.com';
-$ipchgmon::opt_mailsubject = 'DNS test';
+$App::ipchgmon::opt_email = \@recipients;
+$App::ipchgmon::opt_mailfrom = 'dnsfrom@example.com';
+$App::ipchgmon::opt_mailsubject = 'DNS test';
 
 # Build the aoaref
 my $csv = Text::CSV->new();
@@ -51,22 +51,22 @@ push @fields, $csv->string();
 push @$aoaref, [@fields];
 
 # Test IPv4 only
-$ipchgmon::opt_4 = 1;
-$ipchgmon::opt_6 = 0;
+$App::ipchgmon::opt_4 = 1;
+$App::ipchgmon::opt_6 = 0;
 my $dnsname = 'example.com';
-ipchgmon::check_dns($dnsname, $aoaref);
+App::ipchgmon::check_dns($dnsname, $aoaref);
 test_email_sent(1, 1, 0);
 
 # Test both
 $rtn = '';
-$ipchgmon::opt_6 = 1;
-ipchgmon::check_dns($dnsname, $aoaref);
+$App::ipchgmon::opt_6 = 1;
+App::ipchgmon::check_dns($dnsname, $aoaref);
 test_email_sent(2, 1, 1);
 
 # Test IPv6 only
 $rtn = '';
-$ipchgmon::opt_4 = 0;
-ipchgmon::check_dns($dnsname, $aoaref);
+$App::ipchgmon::opt_4 = 0;
+App::ipchgmon::check_dns($dnsname, $aoaref);
 test_email_sent(1, 0, 1);
 
 done_testing();

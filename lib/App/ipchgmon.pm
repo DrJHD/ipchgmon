@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-package ipchgmon;
+package App::ipchgmon;
 
 use strict;
 use warnings;
@@ -17,7 +17,7 @@ use LWP::UserAgent;
 use Socket qw(:addrinfo SOCK_RAW);
 use Text::CSV qw(csv);
 use feature 'say';
-our $VERSION = '1.0.2';
+our $VERSION = '1.0.6';
 
 my $TIMEFORMAT = '%FT%T%z';
 my $strp = DateTime::Format::Strptime->new(on_error => 'croak',

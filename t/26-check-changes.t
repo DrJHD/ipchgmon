@@ -19,10 +19,10 @@ SKIP: {
     
     # Write IPv4 & 6 lines and check that they can be read properly
     my $fqname = $dir . '/test.txt';
-    $ipchgmon::opt_file = $fqname;
-    ipchgmon::check_changes('102.0.0.0', undef);
-    ipchgmon::check_changes('C::0', undef);
-    my $aoaref = ipchgmon::read_file();
+    $App::ipchgmon::opt_file = $fqname;
+    App::ipchgmon::check_changes('102.0.0.0', undef);
+    App::ipchgmon::check_changes('C::0', undef);
+    my $aoaref = App::ipchgmon::read_file();
     is scalar @$aoaref, 2, 'Two lines written to file';
     is $$aoaref[0][0], '102.0.0.0', 'ip4 address written correctly';
     is $$aoaref[1][0], 'C::0',      'ip6 address written correctly';
@@ -32,9 +32,9 @@ SKIP: {
 
     # Simulate the change of both IP addresses. Two more lines should
     # be written and read correctly.
-    ipchgmon::check_changes('102.0.0.1', $aoaref);
-    ipchgmon::check_changes('C::1', $aoaref);
-    $aoaref = ipchgmon::read_file();
+    App::ipchgmon::check_changes('102.0.0.1', $aoaref);
+    App::ipchgmon::check_changes('C::1', $aoaref);
+    $aoaref = App::ipchgmon::read_file();
     is scalar @$aoaref, 4, 'Two more lines written to file, total 4';
     is $$aoaref[2][0], '102.0.0.1', 'ip4 address written correctly';
     is $$aoaref[3][0], 'C::1',      'ip6 address written correctly';
@@ -44,9 +44,9 @@ SKIP: {
 
     # Simulate the finding of the same two IP addresses.
     # No new lines should be written.
-    ipchgmon::check_changes('102.0.0.1', $aoaref);
-    ipchgmon::check_changes('C::1', $aoaref);
-    $aoaref = ipchgmon::read_file();
+    App::ipchgmon::check_changes('102.0.0.1', $aoaref);
+    App::ipchgmon::check_changes('C::1', $aoaref);
+    $aoaref = App::ipchgmon::read_file();
     is scalar @$aoaref, 4, 'Repeats should not be written';
     
     unlink $fqname or warn "Unable to delete $fqname at end of tests.";

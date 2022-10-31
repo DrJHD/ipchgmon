@@ -19,11 +19,11 @@ my $aoaref = [
     ["B::1",            "2022-08-28T01:01:01Z"],
 ];
 
-$ipchgmon::opt_leeway = 86400;
+$App::ipchgmon::opt_leeway = 86400;
 
 # IPv4, not last (but in the aoaref) so overdue should not be set.
 my $ip = "11.11.11.11";
-my ($rtn, $overdue) = ipchgmon::last_ip($ip, $aoaref);
+my ($rtn, $overdue) = App::ipchgmon::last_ip($ip, $aoaref);
 ok !$rtn, "$ip is not last" 
     or diag "$ip reported as as last but it is the first";
 ok !$overdue, "$ip is not overdue" 
@@ -31,7 +31,7 @@ ok !$overdue, "$ip is not overdue"
 
 # IPv4, last and changed long ago, so overdue
 $ip = "101.101.101.101";
-($rtn, $overdue) = ipchgmon::last_ip($ip, $aoaref);
+($rtn, $overdue) = App::ipchgmon::last_ip($ip, $aoaref);
 ok $rtn, "$ip is last" 
     or diag "$ip not given as last but it should be";
 ok $overdue, "$ip is overdue"
@@ -39,7 +39,7 @@ ok $overdue, "$ip is overdue"
     
 # IPv6, not last (but in the aoaref) so overdue should not be set.
 $ip = "B::0";
-($rtn, $overdue) = ipchgmon::last_ip($ip, $aoaref);
+($rtn, $overdue) = App::ipchgmon::last_ip($ip, $aoaref);
 ok !$rtn, "$ip is not last" 
     or diag "$ip reported as  last but it is the first";
 ok !$overdue, "$ip is not overdue" 
@@ -47,7 +47,7 @@ ok !$overdue, "$ip is not overdue"
     
 # IPv6, last and changed long ago, so overdue
 $ip = "B::1";
-($rtn, $overdue) = ipchgmon::last_ip($ip, $aoaref);
+($rtn, $overdue) = App::ipchgmon::last_ip($ip, $aoaref);
 ok $rtn, "$ip is last" 
     or diag "$ip not reported as last but it should be";
 ok $overdue, "$ip is overdue"

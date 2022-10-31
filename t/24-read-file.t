@@ -22,9 +22,11 @@ SKIP: {
         # Invalid file name throws an error on Windows
         my $dudname = '/' . chr(0); # this ought to be invalid in *u*x and ms*
                                     # but works on at least some linuxes  
-        $ipchgmon::opt_file = $dudname;
-        # This error is thrown by Text::CSV, so don't try to improve on it.
-        throws_ok {ipchgmon::read_file()} qr/Invalid argument/, 
+        $App::ipchgmon::opt_file = $dudname;
+        # "Invalid argument" is thrown by Text::CSV, so trying to improve on it
+        # is strange, but the CPAN test routine generates 
+        # "No such file or directory", causing a failure.
+        throws_ok {App::ipchgmon::read_file()} qr/Invalid argument|No such file/, 
             'Invalid file name dies OK';
     }
 
@@ -43,8 +45,8 @@ SKIP: {
     close $fh or die "Couldn't close $fqname: $!";
     
     # Pass the file name as though it were a parameter
-    $ipchgmon::opt_file = $fqname;
-    my $aoa = ipchgmon::read_file();
+    $App::ipchgmon::opt_file = $fqname;
+    my $aoa = App::ipchgmon::read_file();
     is $$aoa[0][0], '11.11.11.11',              'first ip4 address';
     is $$aoa[0][1], 'Fri Aug 28 00:00:00 2022', 'first ip4 timestamp';
     is $$aoa[1][0], '101.101.101.101',          'second ip4 address';

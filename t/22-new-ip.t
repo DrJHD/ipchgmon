@@ -14,8 +14,8 @@ use App::ipchgmon;
 # An invalid filename ought to throw an error regardless of any
 # directory issues
 my $dudname = '/' . chr(0); # this ought to be invalid in *u*x and ms*
-$ipchgmon::opt_file = $dudname;
-throws_ok {ipchgmon::new_ip()} qr/Unable to append to/, 'Invalid file name dies OK';
+$App::ipchgmon::opt_file = $dudname;
+throws_ok {App::ipchgmon::new_ip()} qr/Unable to append to/, 'Invalid file name dies OK';
 
 SKIP: {
     # If the directory is not writable, these tests cannot pass,
@@ -23,10 +23,10 @@ SKIP: {
     skip "Unable to write to $RealBin" unless -w $RealBin;
     my $fqname = $RealBin . '/test.txt';
     # Pass the file name as though it were a command line parameter
-    $ipchgmon::opt_file = $fqname;
+    $App::ipchgmon::opt_file = $fqname;
     # Pass IPv4 and IPv6 addresses through new_ip
-    ipchgmon::new_ip('123.123.123.123');
-    ipchgmon::new_ip('A::1');
+    App::ipchgmon::new_ip('123.123.123.123');
+    App::ipchgmon::new_ip('A::1');
     file_exists_ok($fqname, 'New file should be created ...');
     file_not_empty_ok($fqname, '... and should contain something.');
 

@@ -5,3 +5,11 @@ a bug fix.
 
 1.0.2 - Another attempt to upload to CPAN
 
+1.0.3 - bypassed
+
+1.0.4 - Another upload attempt per https://www.perlmonks.org/index.pl?node_id=11147790
+
+1.0.5 - Strange behaviour on Windows running CPAN test - changed t/24...
+
+1.0.6 - Attempt to fix errors finding modules per issue 144972.
+        Many thanks to Slaven Rezic.
